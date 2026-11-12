@@ -364,3 +364,41 @@ resources:
       - name: Description
         type: string
         key: descr
+
+  - name: NPT
+    filename: npt
+    monad: rule
+    endpoints:
+      add: "/firewall/npt/add_rule"
+      get: "/firewall/npt/get_rule"
+      update: "/firewall/npt/set_rule"
+      delete: "/firewall/npt/del_rule"
+      reconfigure: "/firewall/npt/apply"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Log
+        type: string
+        key: log
+      - name: Sequence
+        type: string
+        key: sequence
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: SourceNet
+        type: string
+        key: source_net
+      - name: DestinationNet
+        type: string
+        key: destination_net
+      - name: TrackInterface
+        type: SelectedMap
+        key: trackif
+      - name: Categories
+        type: SelectedMapList
+        key: categories
+      - name: Description
+        type: string
+        key: description
