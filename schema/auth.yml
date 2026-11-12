@@ -31,10 +31,10 @@ resources:
         type: SelectedMapList
         key: priv
       - name: Member
-        type: SelectedMap
+        type: SelectedMapList
         key: member
       - name: SourceNetworks
-        type: SelectedMap
+        type: SelectedMapList
         key: source_networks
 
   - name: User

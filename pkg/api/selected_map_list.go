@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -91,14 +92,23 @@ func unmarshalJSON(data []byte) ([]string, error) {
 
 	err := json.Unmarshal(data, &dataMap)
 	if err != nil {
-		// If we fail, it's very likely data contains [], so try that
-		var emptyList []string
-		if listErr := json.Unmarshal(data, &emptyList); listErr == nil {
-			// If we parsed without error, then assume list is empty
-			return []string{}, nil
+		// PHP encodes an option map whose keys are exactly 0..n-1 as a JSON
+		// array, e.g. a group's "member" field when root (uid 0) is the only
+		// user. The array index is then the option key.
+		var list []struct {
+			Value    string `json:"value"`
+			Selected any    `json:"selected"`
 		}
-
-		return nil, err
+		if listErr := json.Unmarshal(data, &list); listErr != nil {
+			return nil, err
+		}
+		dataMap = make(map[string]struct {
+			Value    string `json:"value"`
+			Selected any    `json:"selected"`
+		}, len(list))
+		for i, v := range list {
+			dataMap[strconv.Itoa(i)] = v
+		}
 	}
 
 	var s []string

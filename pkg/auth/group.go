@@ -25,8 +25,8 @@ type Group struct {
 	Scope          string              `json:"scope,omitempty"`
 	Description    string              `json:"description"`
 	Privilege      api.SelectedMapList `json:"priv"`
-	Member         api.SelectedMap     `json:"member"`
-	SourceNetworks api.SelectedMap     `json:"source_networks"`
+	Member         api.SelectedMapList `json:"member"`
+	SourceNetworks api.SelectedMapList `json:"source_networks"`
 }
 
 // CRUD operations

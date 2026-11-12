@@ -54,7 +54,8 @@ func TestGroup(t *testing.T) {
 
 	group.Name = "test-group-updated"
 	group.Privilege = api.SelectedMapList([]string{"page-diagnostics-authentication"})
-	group.Member = api.SelectedMap("0")
+	group.Member = api.SelectedMapList([]string{"0"})
+	group.SourceNetworks = api.SelectedMapList([]string{"192.0.2.0/24"})
 	err = controller.UpdateGroup(ctx, key, group)
 	if err != nil {
 		t.Fatalf("Failed to update group: %v", err)
@@ -67,6 +68,14 @@ func TestGroup(t *testing.T) {
 	}
 	if retrievedGroup.Name != group.Name {
 		t.Fatalf("Retrieved group name does not match updated name: got %s, want %s", retrievedGroup.Name, group.Name)
+	}
+	// With root (uid 0) as the only member candidate, OPNsense returns
+	// "member" as a JSON array rather than a map.
+	if retrievedGroup.Member.String() != "0" {
+		t.Fatalf("Retrieved group members do not match: got %q, want \"0\"", retrievedGroup.Member.String())
+	}
+	if retrievedGroup.SourceNetworks.String() != "192.0.2.0/24" {
+		t.Fatalf("Retrieved group source networks do not match: got %q", retrievedGroup.SourceNetworks.String())
 	}
 	if retrievedGroup.Privilege.String() != group.Privilege.String() {
 		t.Fatalf("Retrieved group privileges does not match updated privileges: got %s, want %s", retrievedGroup.Privilege.String(), group.Privilege.String())

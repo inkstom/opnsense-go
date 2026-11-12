@@ -36,6 +36,12 @@ func TestSelectedMapList_UnmarshalJSON(t *testing.T) {
 			wantErr:  false,
 		},
 		{
+			name:     "array form uses the index as key",
+			input:    `[{"value": "root", "selected": 1}, {"value": "other", "selected": 0}]`,
+			expected: SelectedMapList{"0"},
+			wantErr:  false,
+		},
+		{
 			name: "all selected false",
 			input: `{
 				"K1": {"selected": false, "value": "value1"},
