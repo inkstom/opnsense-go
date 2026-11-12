@@ -114,6 +114,12 @@ func unmarshalJSON(data []byte) ([]string, error) {
 	var s []string
 	// Find selected element
 	for k, v := range dataMap {
+		// Some multi-selects (e.g. an IPsec pool's dns) offer a blank
+		// placeholder option that is "selected" when nothing is; it is not a
+		// value.
+		if k == "" {
+			continue
+		}
 		// If bool
 		if selectedBool, ok := v.Selected.(bool); ok {
 			if selectedBool {

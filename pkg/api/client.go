@@ -165,8 +165,9 @@ func (c *Client) ReconfigureService(ctx context.Context, endpoint string) error 
 
 	// Send reconfigure request to OPNsense
 	respJson := &struct {
-		Status string `json:"status,omitempty"`
-		Result string `json:"result,omitempty"`
+		Status    string `json:"status,omitempty"`
+		Result    string `json:"result,omitempty"`
+		StatusMsg string `json:"status_msg,omitempty"`
 	}{}
 	err := c.doRequest(ctx, "POST", endpoint, nil, respJson)
 	if err != nil {
@@ -188,8 +189,27 @@ func (c *Client) ReconfigureService(ctx context.Context, endpoint string) error 
 		strings.TrimSpace(status),
 	)
 	if status != "ok" {
+		if stopFailedOnDisabledService(respJson.StatusMsg) {
+			// The configuration was saved and the service is meant to be
+			// stopped; see stopFailedOnDisabledService.
+			return nil
+		}
+		if respJson.StatusMsg != "" {
+			return fmt.Errorf("reconfigure failed. status: %s: %s", status, respJson.StatusMsg)
+		}
 		return fmt.Errorf("reconfigure failed. status: %s", status)
 	}
 
 	return nil
+}
+
+// stopFailedOnDisabledService reports whether a failed reconfigure only
+// failed to stop the service. Since OPNsense 26.7.6 (core bed9f788f),
+// reconfigure returns status "failed" with `Service "x" failed to stop.` when
+// the service is disabled and its stop command errors, which happens when it
+// was not running (e.g. IPsec before it is enabled). When the service is
+// enabled, the start/reload result replaces the stop result, so this message
+// only appears for a disabled service that is, correctly, not running.
+func stopFailedOnDisabledService(msg string) bool {
+	return strings.HasSuffix(strings.TrimSpace(msg), "failed to stop.")
 }

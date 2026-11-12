@@ -42,6 +42,12 @@ func TestSelectedMapList_UnmarshalJSON(t *testing.T) {
 			wantErr:  false,
 		},
 		{
+			name:     "selected blank placeholder is not a value",
+			input:    `{"": {"selected": 1, "value": "none"}, "192.0.2.53": {"selected": 0, "value": "192.0.2.53"}}`,
+			expected: SelectedMapList{},
+			wantErr:  false,
+		},
+		{
 			name: "all selected false",
 			input: `{
 				"K1": {"selected": false, "value": "value1"},

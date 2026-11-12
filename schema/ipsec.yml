@@ -263,3 +263,90 @@ resources:
       - name: Description
         type: string
         key: description
+
+  - name: IPsecPool
+    filename: ipsec_pool
+    monad: pool
+    endpoints:
+      add: "/ipsec/pools/add"
+      get: "/ipsec/pools/get"
+      update: "/ipsec/pools/set"
+      delete: "/ipsec/pools/del"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Name
+        type: string
+        key: name
+      - name: Addresses
+        type: string
+        key: addrs
+      - name: Dns
+        type: SelectedMapList
+        key: dns
+
+  - name: IPsecKeyPair
+    filename: ipsec_key_pair
+    monad: keyPair
+    endpoints:
+      add: "/ipsec/key_pairs/add_item"
+      get: "/ipsec/key_pairs/get_item"
+      update: "/ipsec/key_pairs/set_item"
+      delete: "/ipsec/key_pairs/del_item"
+    attrs:
+      - name: Name
+        type: string
+        key: name
+      - name: KeyType
+        type: SelectedMap
+        key: keyType
+      - name: PublicKey
+        type: string
+        key: publicKey
+      - name: PrivateKey
+        type: string
+        key: privateKey
+      - name: KeySize
+        type: string
+        key: keySize
+        omitEmpty: true
+      - name: KeyFingerprint
+        type: string
+        key: keyFingerprint
+        omitEmpty: true
+
+  - name: IPsecManualSPD
+    filename: ipsec_manual_spd
+    monad: spd
+    endpoints:
+      add: "/ipsec/manual_spd/add"
+      get: "/ipsec/manual_spd/get"
+      update: "/ipsec/manual_spd/set"
+      delete: "/ipsec/manual_spd/del"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Protocol
+        type: SelectedMap
+        key: protocol
+      - name: ReqId
+        type: string
+        key: reqid
+      - name: ConnectionChild
+        type: SelectedMap
+        key: connection_child
+      - name: Source
+        type: string
+        key: source
+      - name: Destination
+        type: string
+        key: destination
+      - name: Description
+        type: string
+        key: description
+      - name: Origin
+        type: string
+        key: origin
+        omitEmpty: true
