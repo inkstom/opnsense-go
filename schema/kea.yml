@@ -353,3 +353,40 @@ rpc:
         method: "POST"
         endpoint: "/kea/service/reconfigure"
         result_type: "ActionResult"
+  - name: CtrlAgent
+    filename: ctrl_agent
+    rpc_calls:
+      - name: Get
+        endpoint: /kea/ctrl_agent/get
+        method: GET
+        result_type: CtrlAgentWrapper
+      - name: Set
+        endpoint: /kea/ctrl_agent/set
+        method: POST
+        params:
+          - name: ctrlagent
+            optional: true
+            bodyParameter: false
+            customType: CtrlAgentBody
+        result_type: api.ActionResult
+    customTypes:
+      CtrlAgentWrapper:
+      - name: Ctrlagent
+        type: CtrlAgentBody
+        key: ctrlagent
+
+      CtrlAgentBody:
+      - name: General
+        type: CtrlAgentGeneral
+        key: general
+
+      CtrlAgentGeneral:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: HttpHost
+        type: string
+        key: http_host
+      - name: HttpPort
+        type: string
+        key: http_port
