@@ -3,7 +3,9 @@ package routing
 import (
 	"context"
 	"os"
+	"strings"
 	"testing"
+	"time"
 
 	"github.com/browningluke/opnsense-go/pkg/api"
 )
@@ -82,8 +84,19 @@ func TestGatewayGroup(t *testing.T) {
 	}
 	gw2, err := c.AddGateway(ctx, testGateway("TF_TEST_GGW2", "203.0.113.12"))
 	if err != nil {
+		_ = c.DeleteGateway(ctx, gw1)
 		t.Fatalf("AddGateway 2: %v", err)
 	}
+
+	// Cleanups run last-in first-out: the group (registered below) is
+	// deleted before its member gateways.
+	t.Cleanup(func() {
+		for _, g := range []string{gw1, gw2} {
+			if err := c.DeleteGateway(ctx, g); err != nil {
+				t.Errorf("DeleteGateway %s: %v", g, err)
+			}
+		}
+	})
 
 	group := &GatewayGroup{
 		Name:        "TF_TEST_GROUP",
@@ -92,20 +105,25 @@ func TestGatewayGroup(t *testing.T) {
 		Trigger:     "down",
 		Description: "opnsense-go acceptance test",
 	}
-	id, err := c.AddGatewayGroup(ctx, group)
+
+	// OPNsense caches the gateway option list (configd "interface gateways
+	// list", cache_ttl 20s), so brand-new gateways are rejected with
+	// "Option [...] not in list." for up to ~20 seconds.
+	var id string
+	deadline := time.Now().Add(60 * time.Second)
+	for {
+		id, err = c.AddGatewayGroup(ctx, group)
+		if err == nil || !strings.Contains(err.Error(), "not in list") || time.Now().After(deadline) {
+			break
+		}
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		t.Fatalf("AddGatewayGroup: %v", err)
 	}
-
-	// Groups must be deleted before their member gateways.
 	t.Cleanup(func() {
 		if err := c.DeleteGatewayGroup(ctx, id); err != nil {
 			t.Errorf("DeleteGatewayGroup: %v", err)
-		}
-		for _, g := range []string{gw1, gw2} {
-			if err := c.DeleteGateway(ctx, g); err != nil {
-				t.Errorf("DeleteGateway %s: %v", g, err)
-			}
 		}
 	})
 
