@@ -51,6 +51,12 @@ resources:
       - name: Peers
         type: SelectedMapList
         key: peers
+      - name: CarpDependOn
+        type: SelectedMap
+        key: carp_depend_on
+      - name: Debug
+        type: string
+        key: debug
 
   - name: Client
     filename: client

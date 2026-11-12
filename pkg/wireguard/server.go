@@ -32,6 +32,8 @@ type Server struct {
 	DisableRoutes string              `json:"disableroutes"`
 	Gateway       string              `json:"gateway"`
 	Peers         api.SelectedMapList `json:"peers"`
+	CarpDependOn  api.SelectedMap     `json:"carp_depend_on"`
+	Debug         string              `json:"debug"`
 }
 
 // CRUD operations
