@@ -28,6 +28,167 @@ resources:
         type: string
         key: vlanif
 
+  - name: Loopback
+    filename: loopback
+    monad: loopback
+    endpoints:
+      add: "/interfaces/loopback_settings/addItem"
+      get: "/interfaces/loopback_settings/getItem"
+      update: "/interfaces/loopback_settings/setItem"
+      delete: "/interfaces/loopback_settings/delItem"
+      reconfigure: "/interfaces/loopback_settings/reconfigure"
+    attrs:
+      - name: DeviceId
+        type: string
+        key: deviceId
+        omitEmpty: true
+      - name: Description
+        type: string
+        key: description
+
+  - name: Gif
+    filename: gif
+    monad: gif
+    endpoints:
+      add: "/interfaces/gif_settings/addItem"
+      get: "/interfaces/gif_settings/getItem"
+      update: "/interfaces/gif_settings/setItem"
+      delete: "/interfaces/gif_settings/delItem"
+      reconfigure: "/interfaces/gif_settings/reconfigure"
+    attrs:
+      - name: LocalAddress
+        type: string
+        key: local-addr
+      - name: ParentInterface
+        type: string
+        key: if
+        omitEmpty: true
+      - name: Device
+        type: string
+        key: gifif
+        omitEmpty: true
+      - name: RemoteAddress
+        type: string
+        key: remote-addr
+      - name: TunnelLocalAddress
+        type: string
+        key: tunnel-local-addr
+      - name: TunnelRemoteAddress
+        type: string
+        key: tunnel-remote-addr
+      - name: TunnelRemoteNet
+        type: string
+        key: tunnel-remote-net
+      - name: Description
+        type: string
+        key: descr
+      - name: Link1
+        type: string
+        key: link1
+      - name: Link2
+        type: string
+        key: link2
+      - name: NoClamp
+        type: string
+        key: noclamp
+
+  - name: Gre
+    filename: gre
+    monad: gre
+    endpoints:
+      add: "/interfaces/gre_settings/addItem"
+      get: "/interfaces/gre_settings/getItem"
+      update: "/interfaces/gre_settings/setItem"
+      delete: "/interfaces/gre_settings/delItem"
+      reconfigure: "/interfaces/gre_settings/reconfigure"
+    attrs:
+      - name: LocalAddress
+        type: string
+        key: local-addr
+      - name: ParentInterface
+        type: string
+        key: if
+        omitEmpty: true
+      - name: Device
+        type: string
+        key: greif
+        omitEmpty: true
+      - name: RemoteAddress
+        type: string
+        key: remote-addr
+      - name: TunnelLocalAddress
+        type: string
+        key: tunnel-local-addr
+      - name: TunnelRemoteAddress
+        type: string
+        key: tunnel-remote-addr
+      - name: TunnelRemoteNet
+        type: string
+        key: tunnel-remote-net
+      - name: Description
+        type: string
+        key: descr
+
+  - name: Vxlan
+    filename: vxlan
+    monad: vxlan
+    endpoints:
+      add: "/interfaces/vxlan_settings/addItem"
+      get: "/interfaces/vxlan_settings/getItem"
+      update: "/interfaces/vxlan_settings/setItem"
+      delete: "/interfaces/vxlan_settings/delItem"
+      reconfigure: "/interfaces/vxlan_settings/reconfigure"
+    attrs:
+      - name: DeviceId
+        type: string
+        key: deviceId
+        omitEmpty: true
+      - name: Vni
+        type: string
+        key: vxlanid
+      - name: LocalAddress
+        type: string
+        key: vxlanlocal
+      - name: LocalPort
+        type: string
+        key: vxlanlocalport
+      - name: RemoteAddress
+        type: string
+        key: vxlanremote
+      - name: RemotePort
+        type: string
+        key: vxlanremoteport
+      - name: Group
+        type: string
+        key: vxlangroup
+      - name: Device
+        type: SelectedMap
+        key: vxlandev
+
+  - name: Neighbor
+    filename: neighbor
+    monad: neighbor
+    endpoints:
+      add: "/interfaces/neighbor_settings/addItem"
+      get: "/interfaces/neighbor_settings/getItem"
+      update: "/interfaces/neighbor_settings/setItem"
+      delete: "/interfaces/neighbor_settings/delItem"
+      reconfigure: "/interfaces/neighbor_settings/reconfigure"
+    attrs:
+      - name: MacAddress
+        type: string
+        key: etheraddr
+      - name: IpAddress
+        type: string
+        key: ipaddress
+      - name: Description
+        type: string
+        key: descr
+      - name: Origin
+        type: string
+        key: origin
+        omitEmpty: true
+
   - name: Bridge
     filename: bridge
     monad: bridge
