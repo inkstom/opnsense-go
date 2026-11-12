@@ -20,7 +20,7 @@ var BridgeOpts = api.ReqOpts{
 // Data structs
 
 type Bridge struct {
-	Device         string              `json:"bridgeif"`
+	Device         string              `json:"bridgeif,omitempty"`
 	Members        api.SelectedMapList `json:"members"`
 	LinkLocal      string              `json:"linklocal"`
 	EnableStp      string              `json:"enablestp"`

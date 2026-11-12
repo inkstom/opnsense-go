@@ -33,6 +33,7 @@ import (
 type Client interface {
 	Auth() *auth.Controller
 	Bind() *bind.Controller
+	Captiveportal() *captiveportal.Controller
 	Core() *core.Controller
 	Cron() *cron.Controller
 	Dhcrelay() *dhcrelay.Controller
@@ -50,7 +51,6 @@ type Client interface {
 	Routing() *routing.Controller
 	Syslog() *syslog.Controller
 	Trafficshaper() *trafficshaper.Controller
-	Captiveportal() *captiveportal.Controller
 	Trust() *trust.Controller
 	Unbound() *unbound.Controller
 	Wireguard() *wireguard.Controller
@@ -71,6 +71,10 @@ func (c *client) Auth() *auth.Controller {
 
 func (c *client) Bind() *bind.Controller {
 	return &bind.Controller{Api: c.a}
+}
+
+func (c *client) Captiveportal() *captiveportal.Controller {
+	return &captiveportal.Controller{Api: c.a}
 }
 
 func (c *client) Core() *core.Controller {
@@ -139,10 +143,6 @@ func (c *client) Syslog() *syslog.Controller {
 
 func (c *client) Trafficshaper() *trafficshaper.Controller {
 	return &trafficshaper.Controller{Api: c.a}
-}
-
-func (c *client) Captiveportal() *captiveportal.Controller {
-	return &captiveportal.Controller{Api: c.a}
 }
 
 func (c *client) Trust() *trust.Controller {
