@@ -1,0 +1,77 @@
+---
+name: captiveportal
+reconfigureEndpoint: "/captiveportal/service/reconfigure"
+resources:
+  - name: Zone
+    filename: zone
+    monad: zone
+    endpoints:
+      add: "/captiveportal/settings/add_zone"
+      get: "/captiveportal/settings/get_zone"
+      update: "/captiveportal/settings/set_zone"
+      delete: "/captiveportal/settings/del_zone"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: ZoneId
+        type: string
+        key: zoneid
+        omitEmpty: true
+      - name: Interfaces
+        type: SelectedMapList
+        key: interfaces
+      - name: DisableRules
+        type: string
+        key: disableRules
+        omitEmpty: true
+      - name: AuthServers
+        type: SelectedMapList
+        key: authservers
+      - name: Roaming
+        type: string
+        key: roaming
+        omitEmpty: true
+      - name: AlwaysSendAccountingReqs
+        type: string
+        key: alwaysSendAccountingReqs
+      - name: AuthEnforceGroup
+        type: SelectedMap
+        key: authEnforceGroup
+      - name: IdleTimeout
+        type: string
+        key: idletimeout
+      - name: HardTimeout
+        type: string
+        key: hardtimeout
+      - name: ConcurrentLogins
+        type: string
+        key: concurrentlogins
+      - name: Certificate
+        type: SelectedMap
+        key: certificate
+      - name: ServerName
+        type: string
+        key: servername
+      - name: CorsPolicy
+        type: SelectedMap
+        key: corsPolicy
+        omitEmpty: true
+      - name: CorsOrigins
+        type: SelectedMapList
+        key: corsOrigins
+      - name: AllowedAddresses
+        type: SelectedMapList
+        key: allowedAddresses
+      - name: AllowedMACAddresses
+        type: SelectedMapList
+        key: allowedMACAddresses
+      - name: ExtendedPreAuthData
+        type: string
+        key: extendedPreAuthData
+      - name: Template
+        type: SelectedMap
+        key: template
+      - name: Description
+        type: string
+        key: description

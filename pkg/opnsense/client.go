@@ -6,6 +6,7 @@ import (
 	"github.com/browningluke/opnsense-go/pkg/api"
 	"github.com/browningluke/opnsense-go/pkg/auth"
 	"github.com/browningluke/opnsense-go/pkg/bind"
+	"github.com/browningluke/opnsense-go/pkg/captiveportal"
 	"github.com/browningluke/opnsense-go/pkg/core"
 	"github.com/browningluke/opnsense-go/pkg/cron"
 	"github.com/browningluke/opnsense-go/pkg/dhcrelay"
@@ -49,6 +50,7 @@ type Client interface {
 	Routing() *routing.Controller
 	Syslog() *syslog.Controller
 	Trafficshaper() *trafficshaper.Controller
+	Captiveportal() *captiveportal.Controller
 	Trust() *trust.Controller
 	Unbound() *unbound.Controller
 	Wireguard() *wireguard.Controller
@@ -137,6 +139,10 @@ func (c *client) Syslog() *syslog.Controller {
 
 func (c *client) Trafficshaper() *trafficshaper.Controller {
 	return &trafficshaper.Controller{Api: c.a}
+}
+
+func (c *client) Captiveportal() *captiveportal.Controller {
+	return &captiveportal.Controller{Api: c.a}
 }
 
 func (c *client) Trust() *trust.Controller {
