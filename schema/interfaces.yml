@@ -157,6 +157,87 @@ resources:
         type: string
         key: descr
 
+  # Core interface assignments (Interfaces > Assignments). MVC/API since OPNsense 26.7
+  # (settings fields completed in 26.7.6/26.7.7). Items are keyed by interface
+  # identifier (e.g. "opt3"), not a UUID: addItem returns the new identifier in
+  # the "uuid" field. Changes are staged until reconfigure is called.
+  # Model: OPNsense/Interfaces/NetworkInterface.xml
+  # Note: "Assign" above targets the third-party assign_settings controller.
+  - name: Assignment
+    filename: assignment
+    monad: interface
+    endpoints:
+      add: "/interfaces/assignment/addItem"
+      get: "/interfaces/assignment/getItem"
+      update: "/interfaces/assignment/setItem"
+      delete: "/interfaces/assignment/delItem"
+      reconfigure: "/interfaces/assignment/reconfigure"
+    attrs:
+      - name: Identifier
+        type: string
+        key: identifier
+        omitEmpty: true
+      - name: Description
+        type: string
+        key: descr
+      - name: Device
+        type: SelectedMap
+        key: if
+      - name: Enable
+        type: string
+        key: enable
+      - name: Lock
+        type: string
+        key: lock
+      - name: BlockPrivate
+        type: string
+        key: blockpriv
+      - name: BlockBogons
+        type: string
+        key: blockbogons
+      - name: SpoofMac
+        type: string
+        key: spoofmac
+      - name: Promiscuous
+        type: string
+        key: promisc
+      - name: MTU
+        type: string
+        key: mtu
+      - name: MSS
+        type: string
+        key: mss
+      - name: GatewayInterface
+        type: string
+        key: gateway_interface
+      - name: IPv4Type
+        type: SelectedMap
+        key: type4
+      - name: IPv6Type
+        type: SelectedMap
+        key: type6
+      - name: IPv4Address
+        type: string
+        key: ipaddr
+      - name: IPv6Address
+        type: string
+        key: ipaddrv6
+      - name: Gateway
+        type: SelectedMap
+        key: gateway
+      - name: GatewayV6
+        type: SelectedMap
+        key: gatewayv6
+      - name: DhcpHostname
+        type: string
+        key: dhcphostname
+      - name: Track6Interface
+        type: SelectedMap
+        key: track6-interface
+      - name: Track6PrefixId
+        type: string
+        key: track6-prefix-id
+
 rpc:
   - name: "Overview"
     filename: overview
