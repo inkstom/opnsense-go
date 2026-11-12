@@ -45,3 +45,48 @@ resources:
       - name: Description
         type: string
         key: description
+rpc:
+  - name: General
+    filename: general
+    rpc_calls:
+      - name: Get
+        endpoint: /syslog/settings/get
+        method: GET
+        result_type: GeneralSettingsWrapper
+      - name: Set
+        endpoint: /syslog/settings/set
+        method: POST
+        params:
+          - name: syslog
+            optional: true
+            bodyParameter: false
+            customType: GeneralSettingsBody
+        result_type: api.ActionResult
+      - name: Reconfigure
+        endpoint: /syslog/service/reconfigure
+        method: POST
+        result_type: api.ReconfigureStatusResult
+    customTypes:
+      GeneralSettingsWrapper:
+      - name: Syslog
+        type: GeneralSettingsBody
+        key: syslog
+
+      GeneralSettingsBody:
+      - name: General
+        type: GeneralSettings
+        key: general
+
+      GeneralSettings:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: LogLocal
+        type: string
+        key: loglocal
+      - name: MaxPreserve
+        type: string
+        key: maxpreserve
+      - name: MaxFileSize
+        type: string
+        key: maxfilesize
