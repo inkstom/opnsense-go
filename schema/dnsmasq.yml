@@ -129,7 +129,7 @@ resources:
         type: string
         key: nosync
       - name: RaMode
-        type: SelectedMap
+        type: SelectedMapList
         key: ra_mode
       - name: RaPriority
         type: SelectedMap
@@ -629,6 +629,9 @@ rpc:
       - name: DNS_Port
         type: string
         key: port
+      - name: DNS_ExpandHosts
+        type: string
+        key: expand_hosts
       - name: DNS_DNSSEC
         type: string
         key: dnssec
@@ -718,3 +721,15 @@ rpc:
       - name: DisableHASync
         type: string
         key: nosync
+      - name: LocalDomain
+        type: string
+        key: local
+      - name: HostPing
+        type: string
+        key: host_ping
+      - name: LogDhcp
+        type: string
+        key: log_dhcp
+      - name: LogQuiet
+        type: string
+        key: log_quiet

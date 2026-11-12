@@ -21,6 +21,10 @@ type GeneralDHCPSettings struct {
 	RegisterFirewallRules string              `json:"default_fw_rules"`
 	RouterAdvertisements  string              `json:"enable_ra"`
 	DisableHASync         string              `json:"nosync"`
+	LocalDomain           string              `json:"local"`
+	HostPing              string              `json:"host_ping"`
+	LogDhcp               string              `json:"log_dhcp"`
+	LogQuiet              string              `json:"log_quiet"`
 }
 
 type GeneralSettings struct {
@@ -28,6 +32,7 @@ type GeneralSettings struct {
 	Interface                               api.SelectedMapList `json:"interface"`
 	StrictInterfaceBinding                  string              `json:"strictbind"`
 	DNS_Port                                string              `json:"port"`
+	DNS_ExpandHosts                         string              `json:"expand_hosts"`
 	DNS_DNSSEC                              string              `json:"dnssec"`
 	DNS_NoHostLookup                        string              `json:"no_hosts"`
 	DNS_LogDnsQueries                       string              `json:"log_queries"`
