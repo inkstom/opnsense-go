@@ -1,5 +1,34 @@
 ---
 name: core
+reconfigureEndpoint: ""
+resources:
+  - name: Tunable
+    filename: tunable
+    monad: sysctl
+    endpoints:
+      add: "/core/tunables/add_item"
+      get: "/core/tunables/get_item"
+      update: "/core/tunables/set_item"
+      delete: "/core/tunables/del_item"
+      reconfigure: "/core/tunables/reconfigure"
+    attrs:
+      - name: Tunable
+        type: string
+        key: tunable
+      - name: Value
+        type: string
+        key: value
+      - name: Description
+        type: string
+        key: descr
+      - name: DefaultValue
+        type: string
+        key: default_value
+        omitEmpty: true
+      - name: Type
+        type: string
+        key: type
+        omitEmpty: true
 rpc:
   - name: "System"
     filename: system

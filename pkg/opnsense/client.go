@@ -8,6 +8,7 @@ import (
 	"github.com/browningluke/opnsense-go/pkg/bind"
 	"github.com/browningluke/opnsense-go/pkg/core"
 	"github.com/browningluke/opnsense-go/pkg/cron"
+	"github.com/browningluke/opnsense-go/pkg/dhcrelay"
 	"github.com/browningluke/opnsense-go/pkg/diagnostics"
 	"github.com/browningluke/opnsense-go/pkg/dnsmasq"
 	"github.com/browningluke/opnsense-go/pkg/dyndns"
@@ -32,6 +33,7 @@ type Client interface {
 	Bind() *bind.Controller
 	Core() *core.Controller
 	Cron() *cron.Controller
+	Dhcrelay() *dhcrelay.Controller
 	Diagnostics() *diagnostics.Controller
 	Dnsmasq() *dnsmasq.Controller
 	Dyndns() *dyndns.Controller
@@ -73,6 +75,10 @@ func (c *client) Core() *core.Controller {
 
 func (c *client) Cron() *cron.Controller {
 	return &cron.Controller{Api: c.a}
+}
+
+func (c *client) Dhcrelay() *dhcrelay.Controller {
+	return &dhcrelay.Controller{Api: c.a}
 }
 
 func (c *client) Diagnostics() *diagnostics.Controller {

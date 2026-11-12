@@ -1,0 +1,50 @@
+---
+name: dhcrelay
+reconfigureEndpoint: "/dhcrelay/service/reconfigure"
+resources:
+  - name: Destination
+    filename: destination
+    monad: destination
+    endpoints:
+      add: "/dhcrelay/settings/add_dest"
+      get: "/dhcrelay/settings/get_dest"
+      update: "/dhcrelay/settings/set_dest"
+      delete: "/dhcrelay/settings/del_dest"
+    attrs:
+      - name: Name
+        type: string
+        key: name
+      - name: Server
+        type: SelectedMapList
+        key: server
+
+  - name: Relay
+    filename: relay
+    monad: relay
+    endpoints:
+      add: "/dhcrelay/settings/add_relay"
+      get: "/dhcrelay/settings/get_relay"
+      update: "/dhcrelay/settings/set_relay"
+      delete: "/dhcrelay/settings/del_relay"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: Destination
+        type: SelectedMap
+        key: destination
+      - name: AgentInfo
+        type: string
+        key: agent_info
+      - name: CircuitId
+        type: string
+        key: circuit_id
+      - name: RemoteId
+        type: string
+        key: remote_id
+      - name: CarpDependOn
+        type: SelectedMap
+        key: carp_depend_on
