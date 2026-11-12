@@ -1,0 +1,196 @@
+---
+name: trafficshaper
+reconfigureEndpoint: "/trafficshaper/service/reconfigure"
+resources:
+  - name: Pipe
+    filename: pipe
+    monad: pipe
+    endpoints:
+      add: "/trafficshaper/settings/add_pipe"
+      get: "/trafficshaper/settings/get_pipe"
+      update: "/trafficshaper/settings/set_pipe"
+      delete: "/trafficshaper/settings/del_pipe"
+    attrs:
+      - name: Number
+        type: string
+        key: number
+        omitEmpty: true
+      - name: Enabled
+        type: string
+        key: enabled
+        omitEmpty: true
+      - name: Bandwidth
+        type: string
+        key: bandwidth
+      - name: BandwidthMetric
+        type: SelectedMap
+        key: bandwidthMetric
+      - name: Queue
+        type: string
+        key: queue
+      - name: Mask
+        type: SelectedMap
+        key: mask
+      - name: Buckets
+        type: string
+        key: buckets
+      - name: Scheduler
+        type: SelectedMap
+        key: scheduler
+      - name: CodelEnable
+        type: string
+        key: codel_enable
+        omitEmpty: true
+      - name: CodelTarget
+        type: string
+        key: codel_target
+      - name: CodelInterval
+        type: string
+        key: codel_interval
+      - name: CodelEcnEnable
+        type: string
+        key: codel_ecn_enable
+        omitEmpty: true
+      - name: PieEnable
+        type: string
+        key: pie_enable
+        omitEmpty: true
+      - name: FqcodelQuantum
+        type: string
+        key: fqcodel_quantum
+      - name: FqcodelLimit
+        type: string
+        key: fqcodel_limit
+      - name: FqcodelFlows
+        type: string
+        key: fqcodel_flows
+      - name: Delay
+        type: string
+        key: delay
+      - name: Description
+        type: string
+        key: description
+      - name: Origin
+        type: string
+        key: origin
+        omitEmpty: true
+
+  - name: Queue
+    filename: queue
+    monad: queue
+    endpoints:
+      add: "/trafficshaper/settings/add_queue"
+      get: "/trafficshaper/settings/get_queue"
+      update: "/trafficshaper/settings/set_queue"
+      delete: "/trafficshaper/settings/del_queue"
+    attrs:
+      - name: Number
+        type: string
+        key: number
+        omitEmpty: true
+      - name: Enabled
+        type: string
+        key: enabled
+        omitEmpty: true
+      - name: Pipe
+        type: SelectedMap
+        key: pipe
+      - name: Weight
+        type: string
+        key: weight
+      - name: Mask
+        type: SelectedMap
+        key: mask
+      - name: Buckets
+        type: string
+        key: buckets
+      - name: CodelEnable
+        type: string
+        key: codel_enable
+        omitEmpty: true
+      - name: CodelTarget
+        type: string
+        key: codel_target
+      - name: CodelInterval
+        type: string
+        key: codel_interval
+      - name: CodelEcnEnable
+        type: string
+        key: codel_ecn_enable
+        omitEmpty: true
+      - name: PieEnable
+        type: string
+        key: pie_enable
+        omitEmpty: true
+      - name: Description
+        type: string
+        key: description
+      - name: Origin
+        type: string
+        key: origin
+        omitEmpty: true
+
+  - name: Rule
+    filename: rule
+    monad: rule
+    endpoints:
+      add: "/trafficshaper/settings/add_rule"
+      get: "/trafficshaper/settings/get_rule"
+      update: "/trafficshaper/settings/set_rule"
+      delete: "/trafficshaper/settings/del_rule"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+        omitEmpty: true
+      - name: Sequence
+        type: string
+        key: sequence
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: Interface2
+        type: SelectedMap
+        key: interface2
+      - name: Protocol
+        type: SelectedMap
+        key: proto
+      - name: IpLength
+        type: string
+        key: iplen
+      - name: Source
+        type: SelectedMapList
+        key: source
+      - name: SourceNot
+        type: string
+        key: source_not
+        omitEmpty: true
+      - name: SourcePort
+        type: string
+        key: src_port
+      - name: Destination
+        type: SelectedMapList
+        key: destination
+      - name: DestinationNot
+        type: string
+        key: destination_not
+        omitEmpty: true
+      - name: DestinationPort
+        type: string
+        key: dst_port
+      - name: Dscp
+        type: SelectedMapList
+        key: dscp
+      - name: Direction
+        type: SelectedMap
+        key: direction
+      - name: Target
+        type: SelectedMap
+        key: target
+      - name: Description
+        type: string
+        key: description
+      - name: Origin
+        type: string
+        key: origin
+        omitEmpty: true

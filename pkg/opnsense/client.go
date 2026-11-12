@@ -22,6 +22,7 @@ import (
 	"github.com/browningluke/opnsense-go/pkg/routes"
 	"github.com/browningluke/opnsense-go/pkg/routing"
 	"github.com/browningluke/opnsense-go/pkg/syslog"
+	"github.com/browningluke/opnsense-go/pkg/trafficshaper"
 	"github.com/browningluke/opnsense-go/pkg/trust"
 	"github.com/browningluke/opnsense-go/pkg/unbound"
 	"github.com/browningluke/opnsense-go/pkg/wireguard"
@@ -47,6 +48,7 @@ type Client interface {
 	Routes() *routes.Controller
 	Routing() *routing.Controller
 	Syslog() *syslog.Controller
+	Trafficshaper() *trafficshaper.Controller
 	Trust() *trust.Controller
 	Unbound() *unbound.Controller
 	Wireguard() *wireguard.Controller
@@ -131,6 +133,10 @@ func (c *client) Routing() *routing.Controller {
 
 func (c *client) Syslog() *syslog.Controller {
 	return &syslog.Controller{Api: c.a}
+}
+
+func (c *client) Trafficshaper() *trafficshaper.Controller {
+	return &trafficshaper.Controller{Api: c.a}
 }
 
 func (c *client) Trust() *trust.Controller {
