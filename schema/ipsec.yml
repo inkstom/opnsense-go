@@ -350,3 +350,50 @@ resources:
         type: string
         key: origin
         omitEmpty: true
+rpc:
+  - name: Settings
+    filename: ipsec_settings
+    rpc_calls:
+      - name: Get
+        endpoint: /ipsec/settings/get
+        method: GET
+        result_type: SettingsWrapper
+      - name: Set
+        endpoint: /ipsec/settings/set
+        method: POST
+        params:
+          - name: ipsec
+            optional: true
+            bodyParameter: false
+            customType: SettingsBody
+        result_type: api.ActionResult
+    customTypes:
+      SettingsWrapper:
+      - name: Ipsec
+        type: SettingsBody
+        key: ipsec
+
+      SettingsBody:
+      - name: General
+        type: SettingsGeneral
+        key: general
+
+      SettingsGeneral:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: PreferredOldSa
+        type: string
+        key: preferred_oldsa
+      - name: DisableVpnRules
+        type: string
+        key: disablevpnrules
+      - name: PassthroughNetworks
+        type: SelectedMapList
+        key: passthrough_networks
+      - name: UserSource
+        type: SelectedMapList
+        key: user_source
+      - name: LocalGroup
+        type: SelectedMap
+        key: local_group
