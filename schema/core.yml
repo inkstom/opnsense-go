@@ -146,3 +146,63 @@ rpc:
             optional: false
             type: string
         result_type: "ServiceActionResult"
+  - name: Hasync
+    filename: hasync
+    rpc_calls:
+      - name: Get
+        endpoint: /core/hasync/get
+        method: GET
+        result_type: HasyncSettingsWrapper
+      - name: Set
+        endpoint: /core/hasync/set
+        method: POST
+        params:
+          - name: hasync
+            optional: true
+            bodyParameter: false
+            customType: HasyncSettings
+        result_type: api.ActionResult
+      - name: Reconfigure
+        endpoint: /core/hasync/reconfigure
+        method: POST
+        result_type: api.ReconfigureStatusResult
+    customTypes:
+      HasyncSettingsWrapper:
+      - name: Hasync
+        type: HasyncSettings
+        key: hasync
+
+      HasyncSettings:
+      - name: DisablePreempt
+        type: string
+        key: disablepreempt
+      - name: DisconnectPPPs
+        type: string
+        key: disconnectppps
+      - name: PfsyncInterface
+        type: SelectedMap
+        key: pfsyncinterface
+      - name: PfsyncPeerIp
+        type: string
+        key: pfsyncpeerip
+      - name: PfsyncVersion
+        type: SelectedMap
+        key: pfsyncversion
+      - name: PfsyncDefer
+        type: string
+        key: pfsyncdefer
+      - name: SynchronizeToIp
+        type: string
+        key: synchronizetoip
+      - name: VerifyPeer
+        type: string
+        key: verifypeer
+      - name: Username
+        type: string
+        key: username
+      - name: Password
+        type: string
+        key: password
+      - name: SyncItems
+        type: SelectedMapList
+        key: syncitems
