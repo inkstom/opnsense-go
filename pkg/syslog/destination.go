@@ -22,13 +22,14 @@ var DestinationOpts = api.ReqOpts{
 type Destination struct {
 	Enabled     string              `json:"enabled"`
 	Transport   api.SelectedMap     `json:"transport"`
-	Level       api.SelectedMap     `json:"level"`
+	Level       api.SelectedMapList `json:"level"`
 	Facility    api.SelectedMapList `json:"facility"`
 	Program     api.SelectedMapList `json:"program"`
 	Hostname    string              `json:"hostname"`
 	Certificate api.SelectedMap     `json:"certificate"`
 	Port        string              `json:"port"`
 	Rfc5424     string              `json:"rfc5424"`
+	Suppress    string              `json:"suppress,omitempty"`
 	Description string              `json:"description"`
 }
 

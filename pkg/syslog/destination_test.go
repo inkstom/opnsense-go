@@ -25,7 +25,7 @@ func TestDestination(t *testing.T) {
 	dest := &Destination{
 		Enabled:     "1",
 		Transport:   api.SelectedMap("udp4"),
-		Level:       api.SelectedMap("info"),
+		Level:       api.SelectedMapList{"info", "notice"},
 		Facility:    api.SelectedMapList{},
 		Program:     api.SelectedMapList{},
 		Hostname:    "192.0.2.1",
@@ -47,6 +47,9 @@ func TestDestination(t *testing.T) {
 	}
 	if got.Hostname != dest.Hostname {
 		t.Fatalf("Hostname mismatch: got %q, want %q", got.Hostname, dest.Hostname)
+	}
+	if got.Level.String() != "info,notice" {
+		t.Fatalf("Level mismatch: got %q, want %q", got.Level.String(), "info,notice")
 	}
 	if got.Transport.String() != dest.Transport.String() {
 		t.Fatalf("Transport mismatch: got %q, want %q", got.Transport.String(), dest.Transport.String())

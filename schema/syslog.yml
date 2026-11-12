@@ -18,7 +18,7 @@ resources:
         type: SelectedMap
         key: transport
       - name: Level
-        type: SelectedMap
+        type: SelectedMapList
         key: level
       - name: Facility
         type: SelectedMapList
@@ -38,6 +38,10 @@ resources:
       - name: Rfc5424
         type: string
         key: rfc5424
+      - name: Suppress
+        type: string
+        key: suppress
+        omitEmpty: true
       - name: Description
         type: string
         key: description
