@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"net/http/httputil"
 	"strings"
@@ -21,9 +22,14 @@ import (
 )
 
 const (
-	clientMaxBackoff = 30
-	clientMinBackoff = 1
+	clientMaxBackoff = 30 * time.Second
+	clientMinBackoff = 1 * time.Second
 	clientMaxRetries = 4
+
+	// Per-attempt limit. Without one, a request to a firewall that stops
+	// answering waits forever. Reconfigure calls can take tens of seconds,
+	// so keep this generous.
+	clientRequestTimeout = 180 * time.Second
 )
 
 var clientMutexKey = "OPNSENSE"
@@ -43,6 +49,11 @@ type Options struct {
 	MaxBackoff int64
 	MinBackoff int64
 	MaxRetries int64
+
+	// RequestTimeout is the per-attempt timeout in seconds (default 180).
+	// A request that times out is not retried: OPNsense may already have
+	// applied it, and repeating an add would create a duplicate.
+	RequestTimeout int64
 
 	Logger *log.Logger
 }
@@ -79,7 +90,24 @@ func NewClient(options Options) *Client {
 		client.client.RetryMax = int(options.MaxRetries)
 	}
 
+	client.client.HTTPClient.Timeout = clientRequestTimeout
+	if options.RequestTimeout != 0 {
+		client.client.HTTPClient.Timeout = time.Duration(options.RequestTimeout) * time.Second
+	}
+	client.client.CheckRetry = noRetryOnTimeout
+
 	return client
+}
+
+// noRetryOnTimeout keeps retryablehttp's default policy (retry connection
+// errors, 429 and 5xx) but gives up when an attempt timed out, because the
+// firewall may have processed it.
+func noRetryOnTimeout(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	var netErr net.Error
+	if err != nil && errors.As(err, &netErr) && netErr.Timeout() {
+		return false, err
+	}
+	return retryablehttp.DefaultRetryPolicy(ctx, resp, err)
 }
 
 // Requests
