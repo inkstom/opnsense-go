@@ -2,6 +2,17 @@
 
 A Go client library for the OPNsense API.
 
+This is a fork of [browningluke/opnsense-go](https://github.com/browningluke/opnsense-go), maintained by Thomas Inks as the client for [inkstom/terraform-provider-opnsense](https://github.com/inkstom/terraform-provider-opnsense). It adds models for most of the OPNsense core API that upstream lacks (routing gateways, interface assignments and tunnels, IPsec pools and settings, traffic shaper, Monit, syslog, captive portal and more). It also fixes reconfigure on OPNsense 26.7.6 and later, and several multi-select fields.
+
+The module path is still `github.com/browningluke/opnsense-go`, so upstream changes merge cleanly. To use the fork, add a `replace` pinned to a commit:
+
+```sh
+go mod edit -replace github.com/browningluke/opnsense-go=github.com/inkstom/opnsense-go@<commit>
+GOPROXY=direct go mod tidy
+```
+
+Integration tests (`go test ./pkg/...` with `OPNSENSE_URI`, `OPNSENSE_API_KEY` and `OPNSENSE_API_SECRET` set) create and delete objects, so point them at a disposable OPNsense VM.
+
 ## Installation
 
 ```sh
