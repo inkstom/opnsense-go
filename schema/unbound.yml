@@ -169,6 +169,53 @@ resources:
         type: string
         key: description
 
+  # DNSBL blocklist policies (dnsbl.blocklist ArrayField). Named Blocklist
+  # because the settings RPC already has a DNSBL type. service/dnsbl reloads
+  # the templates and the blocklists; a full unbound restart is not needed.
+  - name: Blocklist
+    filename: blocklist
+    monad: blocklist
+    endpoints:
+      add: "/unbound/settings/add_dnsbl"
+      get: "/unbound/settings/get_dnsbl"
+      update: "/unbound/settings/set_dnsbl"
+      delete: "/unbound/settings/del_dnsbl"
+      reconfigure: "/unbound/service/dnsbl"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Type
+        type: SelectedMapList
+        key: type
+      - name: Lists
+        type: SelectedMapList
+        key: lists
+      - name: Allowlists
+        type: SelectedMapList
+        key: allowlists
+      - name: Blocklists
+        type: SelectedMapList
+        key: blocklists
+      - name: Wildcards
+        type: SelectedMapList
+        key: wildcards
+      - name: SourceNets
+        type: SelectedMapList
+        key: source_nets
+      - name: Address
+        type: string
+        key: address
+      - name: NXDomain
+        type: string
+        key: nxdomain
+      - name: CacheTTL
+        type: string
+        key: cache_ttl
+      - name: Description
+        type: string
+        key: description
+
 
 rpc:
   - name: "Settings"
