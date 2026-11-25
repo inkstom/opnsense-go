@@ -119,6 +119,9 @@ func TestGatewayGroup(t *testing.T) {
 		time.Sleep(5 * time.Second)
 	}
 	if err != nil {
+		if strings.Contains(err.Error(), "status code 404") {
+			t.Skip("routing/group_settings API needs OPNsense 26.7+")
+		}
 		t.Fatalf("AddGatewayGroup: %v", err)
 	}
 	t.Cleanup(func() {
