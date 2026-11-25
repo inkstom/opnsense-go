@@ -3,6 +3,7 @@ package interfaces
 import (
 	"context"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/browningluke/opnsense-go/pkg/api"
@@ -46,6 +47,9 @@ func TestAssignment(t *testing.T) {
 	}
 	ifname, err := c.AddAssignment(ctx, a)
 	if err != nil {
+		if strings.Contains(err.Error(), "status code 404") {
+			t.Skip("interfaces/assignment API needs OPNsense 26.7.7+")
+		}
 		t.Fatalf("AddAssignment: %v", err)
 	}
 	t.Logf("assigned %s as %s", vlan.Device, ifname)
